@@ -49,88 +49,112 @@ export const ReferenceInput: React.FC<ReferenceInputProps> = ({
           <p className="hand-note">"what's standing next to your object?"</p>
         </div>
 
-        {/* Quick select presets */}
-        <div>
-          <label className="input-label">Quick Pick Known Items:</label>
-          <div className="chip-grid">
-            {POPULAR_REFERENCES.map((item) => {
-              const isSelected = referenceName === item.name;
-              return (
-                <button
-                  key={item.name}
-                  type="button"
-                  className={`chip-btn ${isSelected ? 'active' : ''}`}
-                  onClick={() => handleSelectPreset(item.name, item.heightCm)}
+        <div className="responsive-two-col" style={{ marginBottom: '1.5rem' }}>
+          {/* Left Column: Presets & Tips */}
+          <div>
+            <label className="input-label">Quick Pick Known Items:</label>
+            <div className="chip-grid">
+              {POPULAR_REFERENCES.map((item) => {
+                const isSelected = referenceName === item.name;
+                return (
+                  <button
+                    key={item.name}
+                    type="button"
+                    className={`chip-btn ${isSelected ? 'active' : ''}`}
+                    onClick={() => handleSelectPreset(item.name, item.heightCm)}
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.name.split(' (')[0]}</span>
+                    <span style={{ opacity: 0.75, fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+                      ({item.heightCm}cm)
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div
+              style={{
+                fontSize: '0.88rem',
+                color: '#333',
+                background: '#fffde6',
+                border: 'var(--border-thin)',
+                boxShadow: '3px 3px 0px #111',
+                padding: '0.85rem',
+                borderRadius: '8px',
+                marginTop: '1rem',
+              }}
+            >
+              💡 <strong>Lalettan Measurement Tip:</strong> A regular smartphone is ~15 cm. Stand it upright
+              on the floor or table right beside the object before snapping the picture!
+            </div>
+          </div>
+
+          {/* Right Column: Reference Details Form */}
+          <div>
+            <div className="brutal-card" style={{ margin: 0 }}>
+              <div className="input-group" style={{ marginTop: 0 }}>
+                <label className="input-label" htmlFor="ref-name-input">
+                  Reference Item Name
+                </label>
+                <div className="input-row">
+                  <input
+                    id="ref-name-input"
+                    type="text"
+                    className="text-input"
+                    value={referenceName}
+                    onChange={(e) => setReferenceName(e.target.value)}
+                    placeholder="e.g. Smartphone, Bottle, Book"
+                  />
+                </div>
+              </div>
+
+              <div className="input-group">
+                <label className="input-label" htmlFor="ref-height-input">
+                  Known Physical Height
+                </label>
+                <div className="input-row">
+                  <input
+                    id="ref-height-input"
+                    type="number"
+                    step="any"
+                    min="0.5"
+                    max="3000"
+                    className="numeric-input"
+                    value={heightCmStr}
+                    onChange={(e) => {
+                      setHeightCmStr(e.target.value);
+                      setError(null);
+                    }}
+                    placeholder="15"
+                  />
+                  <span className="input-unit">cm</span>
+                </div>
+                <p
+                  style={{
+                    fontSize: '0.85rem',
+                    color: 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)',
+                    marginTop: '0.35rem',
+                  }}
                 >
-                  <span>{item.icon}</span>
-                  <span>{item.name.split(' (')[0]}</span>
-                  <span style={{ opacity: 0.75, fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
-                    ({item.heightCm}cm)
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+                  = {((parseFloat(heightCmStr) || 0) / 100).toFixed(3)} meters
+                </p>
+              </div>
 
-        <div className="brutal-card">
-          <div className="input-group" style={{ marginTop: 0 }}>
-            <label className="input-label" htmlFor="ref-name-input">
-              Reference Item Name
-            </label>
-            <div className="input-row">
-              <input
-                id="ref-name-input"
-                type="text"
-                className="text-input"
-                value={referenceName}
-                onChange={(e) => setReferenceName(e.target.value)}
-                placeholder="e.g. Smartphone, Bottle, Book"
-              />
+              {error && <div className="error-banner">⚠️ {error}</div>}
+            </div>
+
+            <div className="btn-group" style={{ marginTop: '1rem' }}>
+              <button className="btn btn-primary" onClick={handleContinue}>
+                CONTINUE ➔
+              </button>
+              <button className="btn btn-secondary" onClick={onBack}>
+                BACK
+              </button>
             </div>
           </div>
-
-          <div className="input-group">
-            <label className="input-label" htmlFor="ref-height-input">
-              Known Physical Height
-            </label>
-            <div className="input-row">
-              <input
-                id="ref-height-input"
-                type="number"
-                step="any"
-                min="0.5"
-                max="3000"
-                className="numeric-input"
-                value={heightCmStr}
-                onChange={(e) => {
-                  setHeightCmStr(e.target.value);
-                  setError(null);
-                }}
-                placeholder="15"
-              />
-              <span className="input-unit">cm</span>
-            </div>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.35rem' }}>
-              = {((parseFloat(heightCmStr) || 0) / 100).toFixed(3)} meters
-            </p>
-          </div>
-
-          {error && <div className="error-banner">⚠️ {error}</div>}
-
-          <div style={{ fontSize: '0.85rem', color: '#444', background: '#faf8f4', border: '1.5px dashed #111', padding: '0.75rem', borderRadius: '8px', marginTop: '0.5rem' }}>
-            💡 <strong>Hack:</strong> A regular phone is ~15 cm. Stand it upright on the floor/desk beside the target object and take a picture!
-          </div>
         </div>
-      </div>
-
-      <div className="btn-group">
-        <button className="btn btn-primary" onClick={handleContinue}>
-          CONTINUE ➔
-        </button>
-        <button className="btn btn-secondary" onClick={onBack}>
-          BACK
-        </button>
       </div>
     </div>
   );

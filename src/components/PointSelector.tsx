@@ -237,68 +237,137 @@ export const PointSelector: React.FC<PointSelectorProps> = ({
       : 'Object marked! Ready to calculate.';
   }
 
+  const pixelDistance =
+    bottomPoint && topPoint
+      ? Math.round(Math.sqrt(Math.pow(topPoint.x - bottomPoint.x, 2) + Math.pow(topPoint.y - bottomPoint.y, 2)))
+      : null;
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
       <div>
-        <div className="brand-header" style={{ marginBottom: '0.65rem' }}>
-          <span className="brand-badge">{isReference ? 'Step 3 of 4' : 'Step 4 of 4'}</span>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800 }}>
+        <div className="brand-header" style={{ marginBottom: '1rem' }}>
+          <div className="tinker-pill">{isReference ? 'STEP 03 OF 04' : 'STEP 04 OF 04'}</div>
+          <h2 style={{ fontSize: '1.9rem', fontWeight: 900, textTransform: 'uppercase' }}>
             {isReference ? `Mark ${referenceName}` : 'Mark Measured Object'}
           </h2>
-        </div>
-
-        <div className="step-banner">
-          <span className="step-instruction">{instructionText}</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            {isReference && onRotateImage && (
-              <button
-                type="button"
-                className="chip-btn"
-                onClick={handleRotate}
-                style={{ padding: '3px 8px', fontSize: '0.75rem' }}
-                title="Rotate 90 degrees if photo was taken sideways"
-              >
-                🔄 Rotate
-              </button>
-            )}
-            <span className={`step-tag ${isReference ? 'ref' : 'obj'}`}>
-              {isReference ? referenceName.toUpperCase() : 'OBJECT'}
-            </span>
-          </div>
+          <p className="hand-note">
+            {isReference
+              ? `"click bottom then top of ${referenceName}"`
+              : '"now click bottom then top of the object"'}
+          </p>
         </div>
 
         {error && <div className="error-banner">⚠️ {error}</div>}
 
-        <div className="canvas-wrapper">
-          <canvas
-            ref={canvasRef}
-            onClick={handleCanvasClick}
-            onTouchStart={handleCanvasClick}
-            className="measurement-canvas"
-          />
-        </div>
+        <div className="responsive-canvas-layout">
+          {/* Canvas Column */}
+          <div>
+            <div className="canvas-wrapper">
+              <canvas
+                ref={canvasRef}
+                onClick={handleCanvasClick}
+                onTouchStart={handleCanvasClick}
+                className="measurement-canvas"
+              />
+            </div>
+            <p
+              style={{
+                fontSize: '0.82rem',
+                color: 'var(--text-muted)',
+                textAlign: 'center',
+                marginTop: '0.5rem',
+                fontFamily: 'var(--font-mono)',
+              }}
+            >
+              🖱️ Mouse crosshair on laptop • 👆 Touch tap on phone
+            </p>
+          </div>
 
-        <p style={{ fontSize: '0.8rem', color: 'var(--text-subtle)', textAlign: 'center', marginTop: '0.5rem' }}>
-          Tap to place bottom, then top. Use "Reset Points" if you wish to adjust.
-        </p>
-      </div>
+          {/* Controls & Instructions Column */}
+          <div className="sticky-panel-desktop" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+            {/* Step Banner */}
+            <div className="step-banner" style={{ margin: 0 }}>
+              <span className="step-instruction">{instructionText}</span>
+              <span className={`step-tag ${isReference ? 'ref' : 'obj'}`}>
+                {isReference ? referenceName.toUpperCase() : 'OBJECT'}
+              </span>
+            </div>
 
-      <div className="btn-group" style={{ marginTop: '1rem' }}>
-        <button
-          className="btn btn-primary"
-          disabled={!bottomPoint || !topPoint}
-          onClick={handleProceed}
-        >
-          {isReference ? 'CONTINUE ➔' : 'CALCULATE HEIGHT ⚡'}
-        </button>
+            {/* Marking Status Card */}
+            <div className="brutal-card" style={{ margin: 0, padding: '1rem' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 900, textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                📍 Marker Coordinates:
+              </div>
 
-        <div className="btn-row">
-          <button className="btn btn-secondary" onClick={handleReset}>
-            RESET POINTS
-          </button>
-          <button className="btn btn-secondary" onClick={onBack}>
-            BACK
-          </button>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.85rem', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>1. Bottom Point:</span>
+                  <span style={{ fontWeight: 800, color: bottomPoint ? '#10b981' : '#888' }}>
+                    {bottomPoint ? `(${Math.round(bottomPoint.x)}, ${Math.round(bottomPoint.y)})` : '⏳ Waiting'}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>2. Top Point:</span>
+                  <span style={{ fontWeight: 800, color: topPoint ? '#10b981' : '#888' }}>
+                    {topPoint ? `(${Math.round(topPoint.x)}, ${Math.round(topPoint.y)})` : '⏳ Waiting'}
+                  </span>
+                </div>
+                {pixelDistance !== null && (
+                  <div
+                    style={{
+                      borderTop: '1.5px dashed #ccc',
+                      paddingTop: '6px',
+                      marginTop: '4px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontWeight: 800,
+                    }}
+                  >
+                    <span>Span Height:</span>
+                    <span style={{ color: 'var(--tinker-pink)' }}>{pixelDistance} px</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Action buttons inside panel */}
+              <div style={{ display: 'flex', gap: '8px', marginTop: '0.85rem' }}>
+                {isReference && onRotateImage && (
+                  <button
+                    type="button"
+                    className="chip-btn"
+                    onClick={handleRotate}
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    title="Rotate 90 degrees if photo was taken sideways"
+                  >
+                    🔄 Rotate 90°
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="chip-btn"
+                  onClick={handleReset}
+                  style={{ flex: 1, justifyContent: 'center' }}
+                >
+                  Reset Points
+                </button>
+              </div>
+            </div>
+
+            {/* Action Buttons for this step */}
+            <div className="btn-group">
+              <button
+                className="btn btn-primary"
+                disabled={!bottomPoint || !topPoint}
+                onClick={handleProceed}
+              >
+                {isReference ? 'CONTINUE ➔' : 'CALCULATE HEIGHT ⚡'}
+              </button>
+
+              <button className="btn btn-secondary" onClick={onBack}>
+                BACK
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

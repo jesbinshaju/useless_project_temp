@@ -62,6 +62,30 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  transition: max-width 0.25s ease, padding 0.25s ease;
+}
+
+/* Responsive multi-column layout classes */
+.responsive-two-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.responsive-canvas-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.responsive-result-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sticky-panel-desktop {
+  position: static;
 }
 
 /* Handwritten scribble notes */
@@ -582,3 +606,97 @@ html, body {
 .hidden-input {
   display: none;
 }
+
+/* =========================================================
+   LAPTOP & DESKTOP RESPONSIVE DESIGN (>= 768px and >= 1100px)
+   ========================================================= */
+
+@media (min-width: 768px) {
+  .app-container {
+    max-width: 980px;
+    padding: 2rem 2rem 3rem;
+  }
+
+  .brand-title {
+    font-size: 4rem;
+  }
+
+  .brand-subtitle {
+    font-size: 2.2rem;
+  }
+
+  /* Two-column layout on laptops */
+  .responsive-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  /* Point selector: Canvas on left, instructions & controls on right */
+  .responsive-canvas-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 0.85fr;
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  /* Result screen: Stacked Mohanlal photo on left, score & meme on right */
+  .responsive-result-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  .sticky-panel-desktop {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  /* Laptop webcam preview widescreen */
+  .camera-video-wrapper {
+    aspect-ratio: 16/9;
+    max-height: 480px;
+  }
+
+  .measurement-canvas {
+    max-height: 65vh;
+  }
+
+  .captured-image-preview {
+    max-height: 58vh;
+  }
+
+  /* Buttons on wide screens */
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .app-container {
+    max-width: 1120px;
+    padding: 2.5rem 2.5rem 3.5rem;
+  }
+
+  .brand-title {
+    font-size: 4.4rem;
+  }
+
+  .responsive-canvas-layout {
+    grid-template-columns: 1.4fr 0.85fr;
+    gap: 2rem;
+  }
+
+  .responsive-result-layout {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.25rem;
+  }
+
+  .measurement-canvas {
+    max-height: 70vh;
+  }
+}
+

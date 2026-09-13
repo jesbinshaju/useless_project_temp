@@ -50,7 +50,7 @@ export const Result: React.FC<ResultProps> = ({
     baseImg.src = imageDataUrl;
 
     const mohanlalImg = new Image();
-    mohanlalImg.src = MOHANLAL_IMAGE_URL;
+    mohanlalImg.src = selectedSkinUrl;
 
     let isCancelled = false;
 
@@ -331,196 +331,276 @@ export const Result: React.FC<ResultProps> = ({
     return () => {
       isCancelled = true;
     };
-  }, [imageDataUrl, result, showOverlay, rotationDeg]);
+  }, [imageDataUrl, result, showOverlay, rotationDeg, selectedSkinUrl]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
       <div>
-        <div className="brand-header">
+        <div className="brand-header" style={{ marginBottom: '1.25rem' }}>
           <div className="tinker-pill">VERIFIED RESULT</div>
           <h1 className="brand-title">A10 METER</h1>
+          <p className="hand-note">"official lalettan measurement protocol complete"</p>
         </div>
 
-        {/* Primary Multiplier & Unit Selector */}
-        <div className="result-hero-box">
-          <div className="stamp-badge">VERIFIED USELESS</div>
-          <div className="result-multiplier-val">{roundedA10} ×</div>
-          <div className="result-multiplier-label">{A10_UNIT_LABEL}</div>
-          <div className="result-quote">
-            "That's about {roundedA10} {A10_NAME}s tall."
+        <div className="responsive-result-layout">
+          {/* Left Column: Stacked Mohanlal Photo Canvas & Skin Selector */}
+          <div>
+            {imageDataUrl && (
+              <div className="brutal-card" style={{ marginBottom: '1rem' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '0.75rem',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                  }}
+                >
+                  <div style={{ fontSize: '0.95rem', fontWeight: 900, textTransform: 'uppercase' }}>
+                    📸 Mohanlal Scaled On Object
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      type="button"
+                      className="chip-btn"
+                      onClick={handleRotateImage}
+                      style={{ padding: '4px 8px', fontSize: '0.78rem' }}
+                      title="Rotate photo 90 degrees"
+                    >
+                      🔄 Rotate
+                    </button>
+                    <button
+                      type="button"
+                      className="chip-btn"
+                      onClick={() => setShowOverlay(!showOverlay)}
+                      style={{ padding: '4px 8px', fontSize: '0.78rem' }}
+                    >
+                      {showOverlay ? '👁️ Hide Lalettan' : '👁️ Show Lalettan'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="canvas-wrapper">
+                  <canvas ref={canvasRef} className="measurement-canvas" />
+                </div>
+
+                {/* Choose Lalettan Avatar Skin */}
+                <div style={{ marginTop: '0.85rem' }}>
+                  <div
+                    style={{
+                      fontSize: '0.8rem',
+                      fontWeight: 900,
+                      textTransform: 'uppercase',
+                      marginBottom: '0.35rem',
+                    }}
+                  >
+                    🎭 Choose Lalettan Avatar:
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    {LALETTAN_SKINS.map((skin) => (
+                      <button
+                        key={skin.id}
+                        type="button"
+                        className={`chip-btn ${selectedSkinUrl === skin.url ? 'active' : ''}`}
+                        onClick={() => setSelectedSkinUrl(skin.url)}
+                        style={{ fontSize: '0.78rem', padding: '5px 10px' }}
+                      >
+                        <span>{skin.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <p
+                  style={{
+                    fontFamily: 'var(--font-hand)',
+                    fontSize: '1.4rem',
+                    color: 'var(--text-sketch)',
+                    textAlign: 'center',
+                    marginTop: '0.65rem',
+                  }}
+                >
+                  "measured strictly to scale using 1 A10 = 172 cm"
+                </p>
+              </div>
+            )}
+
+            {/* Humorous remark */}
+            <div className="useless-quote-box" style={{ margin: '0 0 1rem 0' }}>
+              ✨ "congratulations. you have measured something nobody asked you to measure."
+            </div>
+
+            {/* Disclaimer */}
+            <div className="disclaimer-box" style={{ margin: 0 }}>
+              <strong>⚠️ Disclaimer:</strong> Built for TinkerHub Useless Projects. Accuracy depends on
+              camera angle, keeping the reference and measured object at approximately the same distance and
+              ground level. Not for building bridges or space rockets.
+            </div>
           </div>
 
-          {/* Metric Selector Tabs (cm, m, ft) */}
-          <div
-            style={{
-              display: 'inline-flex',
-              background: '#ffffff',
-              padding: '3px',
-              borderRadius: '8px',
-              border: 'var(--border-thick)',
-              boxShadow: '3px 3px 0px #111111',
-              marginTop: '1.25rem',
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => setActiveUnit('cm')}
-              style={{
-                background: activeUnit === 'cm' ? 'var(--tinker-yellow)' : 'transparent',
-                color: '#111111',
-                fontWeight: 900,
-                fontFamily: 'var(--font-display)',
-                border: activeUnit === 'cm' ? '2px solid #111' : 'none',
-                padding: '6px 14px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-              }}
-            >
-              cm
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveUnit('m')}
-              style={{
-                background: activeUnit === 'm' ? 'var(--tinker-yellow)' : 'transparent',
-                color: '#111111',
-                fontWeight: 900,
-                fontFamily: 'var(--font-display)',
-                border: activeUnit === 'm' ? '2px solid #111' : 'none',
-                padding: '6px 14px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-              }}
-            >
-              m
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveUnit('ft')}
-              style={{
-                background: activeUnit === 'ft' ? 'var(--tinker-yellow)' : 'transparent',
-                color: '#111111',
-                fontWeight: 900,
-                fontFamily: 'var(--font-display)',
-                border: activeUnit === 'ft' ? '2px solid #111' : 'none',
-                padding: '6px 14px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-              }}
-            >
-              ft
-            </button>
-          </div>
+          {/* Right Column: Score, Unit Selector, Meme, Stats & Buttons */}
+          <div className="sticky-panel-desktop" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* Primary Multiplier & Unit Selector */}
+            <div className="result-hero-box" style={{ margin: 0 }}>
+              <div className="stamp-badge">VERIFIED USELESS</div>
+              <div className="result-multiplier-val">{roundedA10} ×</div>
+              <div className="result-multiplier-label">{A10_UNIT_LABEL}</div>
+              <div className="result-quote">
+                "That's about {roundedA10} {A10_NAME}s tall."
+              </div>
 
-          <div
-            style={{
-              marginTop: '0.75rem',
-              fontSize: '2rem',
-              fontWeight: 900,
-              fontFamily: 'var(--font-mono)',
-              color: '#111111',
-            }}
-          >
-            {formattedHeight()}
-          </div>
-        </div>
+              {/* Metric Selector Tabs (cm, m, ft) */}
+              <div
+                style={{
+                  display: 'inline-flex',
+                  background: '#ffffff',
+                  padding: '3px',
+                  borderRadius: '8px',
+                  border: 'var(--border-thick)',
+                  boxShadow: '3px 3px 0px #111111',
+                  marginTop: '1.25rem',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setActiveUnit('cm')}
+                  style={{
+                    background: activeUnit === 'cm' ? 'var(--tinker-yellow)' : 'transparent',
+                    color: '#111111',
+                    fontWeight: 900,
+                    fontFamily: 'var(--font-display)',
+                    border: activeUnit === 'cm' ? '2px solid #111' : 'none',
+                    padding: '6px 14px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  cm
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveUnit('m')}
+                  style={{
+                    background: activeUnit === 'm' ? 'var(--tinker-yellow)' : 'transparent',
+                    color: '#111111',
+                    fontWeight: 900,
+                    fontFamily: 'var(--font-display)',
+                    border: activeUnit === 'm' ? '2px solid #111' : 'none',
+                    padding: '6px 14px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  m
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveUnit('ft')}
+                  style={{
+                    background: activeUnit === 'ft' ? 'var(--tinker-yellow)' : 'transparent',
+                    color: '#111111',
+                    fontWeight: 900,
+                    fontFamily: 'var(--font-display)',
+                    border: activeUnit === 'ft' ? '2px solid #111' : 'none',
+                    padding: '6px 14px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  ft
+                </button>
+              </div>
 
-        {/* Stacked Mohanlal on Photo Canvas */}
-        {imageDataUrl && (
-          <div className="brutal-card">
+              <div
+                style={{
+                  marginTop: '0.75rem',
+                  fontSize: '2rem',
+                  fontWeight: 900,
+                  fontFamily: 'var(--font-mono)',
+                  color: '#111111',
+                }}
+              >
+                {formattedHeight()}
+              </div>
+            </div>
+
+            {/* Reaction Meme Card based on measurement size */}
             <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '0.75rem',
-                flexWrap: 'wrap',
-                gap: '8px',
-              }}
+              className="brutal-card brutal-card-yellow"
+              style={{ margin: 0, padding: '0.85rem', display: 'flex', alignItems: 'center', gap: '12px' }}
             >
-              <div style={{ fontSize: '0.95rem', fontWeight: 900, textTransform: 'uppercase' }}>
-                📸 Mohanlal Stacked On Object
-              </div>
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <button
-                  type="button"
-                  className="chip-btn"
-                  onClick={handleRotateImage}
-                  style={{ padding: '4px 8px', fontSize: '0.78rem' }}
-                  title="Rotate photo 90 degrees"
+              <img
+                src={result.a10Multiplier > 3 ? '/meme_kireedam.webp' : '/meme_barroz.jpg'}
+                alt="Reaction"
+                style={{
+                  width: '72px',
+                  height: '72px',
+                  borderRadius: '8px',
+                  border: '2px solid #111',
+                  objectFit: 'cover',
+                }}
+              />
+              <div>
+                <div
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 900,
+                    textTransform: 'uppercase',
+                    color: 'var(--tinker-pink)',
+                  }}
                 >
-                  🔄 Rotate
-                </button>
-                <button
-                  type="button"
-                  className="chip-btn"
-                  onClick={() => setShowOverlay(!showOverlay)}
-                  style={{ padding: '4px 8px', fontSize: '0.78rem' }}
+                  {result.a10Multiplier > 3 ? '🔴 Kireedam Sethumadhavan Moment' : '🟡 Barroz Reaction'}
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-hand)',
+                    fontSize: '1.45rem',
+                    lineHeight: '1.15',
+                    color: '#111',
+                  }}
                 >
-                  {showOverlay ? '👁️ Hide Lalettan' : '👁️ Show Lalettan'}
-                </button>
+                  {result.a10Multiplier > 3
+                    ? '"Ente ponnedaave ithrekkaayirunno ithinte neelam?!"'
+                    : '"Pakshe ithu aarkku venam? Athalle useless project!"'}
+                </div>
               </div>
             </div>
 
-            <div className="canvas-wrapper">
-              <canvas ref={canvasRef} className="measurement-canvas" />
+            {/* Stats Grid */}
+            <div className="stats-grid-brutal" style={{ margin: 0 }}>
+              <div className="stat-card-brutal">
+                <div className="stat-card-val">{result.objectHeightCm.toFixed(1)} cm</div>
+                <div className="stat-card-lbl">Centimeters</div>
+              </div>
+              <div className="stat-card-brutal">
+                <div className="stat-card-val">{result.objectHeightMeters.toFixed(2)} m</div>
+                <div className="stat-card-lbl">Meters</div>
+              </div>
             </div>
-            <p
-              style={{
-                fontFamily: 'var(--font-hand)',
-                fontSize: '1.4rem',
-                color: 'var(--text-sketch)',
-                textAlign: 'center',
-                marginTop: '0.5rem',
-              }}
-            >
-              "measured strictly to scale using 1 A10 = 172 cm"
-            </p>
-          </div>
-        )}
 
-        {/* Stats Grid */}
-        <div className="stats-grid-brutal">
-          <div className="stat-card-brutal">
-            <div className="stat-card-val">{result.objectHeightCm.toFixed(1)} cm</div>
-            <div className="stat-card-lbl">Centimeters</div>
-          </div>
-          <div className="stat-card-brutal">
-            <div className="stat-card-val">{result.objectHeightMeters.toFixed(2)} m</div>
-            <div className="stat-card-lbl">Meters</div>
+            <div className="stats-grid-brutal" style={{ margin: 0 }}>
+              <div className="stat-card-brutal">
+                <div className="stat-card-val">{roundedRefMultiplier}×</div>
+                <div className="stat-card-lbl">{result.referenceName.split(' ')[0]}s</div>
+              </div>
+              <div className="stat-card-brutal">
+                <div className="stat-card-val">172 cm</div>
+                <div className="stat-card-lbl">1 A10 Unit</div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="btn-group" style={{ marginTop: '0.5rem' }}>
+              <button className="btn btn-primary" onClick={onMeasureAgain}>
+                MEASURE ANOTHER OBJECT 🔄
+              </button>
+              <button className="btn btn-secondary" onClick={onChangeReference}>
+                CHANGE REFERENCE ITEM
+              </button>
+            </div>
           </div>
         </div>
-
-        <div className="stats-grid-brutal">
-          <div className="stat-card-brutal">
-            <div className="stat-card-val">{roundedRefMultiplier}×</div>
-            <div className="stat-card-lbl">{result.referenceName.split(' ')[0]}s</div>
-          </div>
-          <div className="stat-card-brutal">
-            <div className="stat-card-val">172 cm</div>
-            <div className="stat-card-lbl">1 A10 Unit</div>
-          </div>
-        </div>
-
-        {/* Humorous remark */}
-        <div className="useless-quote-box">
-          ✨ "congratulations. you have measured something nobody asked you to measure."
-        </div>
-
-        {/* Disclaimer */}
-        <div className="disclaimer-box">
-          <strong>⚠️ Disclaimer:</strong> Built for TinkerHub Useless Projects. Accuracy depends on camera angle, keeping the reference and measured object at approximately the same distance and ground level. Not for building bridges or space rockets.
-        </div>
-      </div>
-
-      {/* Buttons */}
-      <div className="btn-group" style={{ marginTop: '1.25rem' }}>
-        <button className="btn btn-primary" onClick={onMeasureAgain}>
-          MEASURE ANOTHER OBJECT 🔄
-        </button>
-        <button className="btn btn-secondary" onClick={onChangeReference}>
-          CHANGE REFERENCE ITEM
-        </button>
       </div>
     </div>
   );
