@@ -1,0 +1,26 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Android legacy files in repo
+*.iml
+.gradle
+/local.properties
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties

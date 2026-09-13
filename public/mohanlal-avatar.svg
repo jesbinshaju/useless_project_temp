@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="100%" height="100%">
+  <!-- Mohanlal / Lalettan Stylized Vector Avatar -->
+  <!-- Shadow -->
+  <ellipse cx="100" cy="310" rx="60" ry="8" fill="rgba(0,0,0,0.15)"/>
+  
+  <!-- Mundu / Dhoti -->
+  <path d="M 65 190 L 60 295 L 140 295 L 135 190 Z" fill="#fafafa" stroke="#d4d4d8" stroke-width="2"/>
+  <!-- Gold Kasavu Border on Mundu -->
+  <line x1="60" y1="288" x2="140" y2="288" stroke="#d97706" stroke-width="4"/>
+  <line x1="60" y1="292" x2="140" y2="292" stroke="#b45309" stroke-width="1.5"/>
+  <!-- Fold line in Mundu -->
+  <path d="M 98 190 L 98 288" stroke="#e4e4e7" stroke-width="2"/>
+
+  <!-- Feet / Slippers -->
+  <ellipse cx="80" cy="300" rx="14" ry="5" fill="#475569"/>
+  <ellipse cx="120" cy="300" rx="14" ry="5" fill="#475569"/>
+
+  <!-- Kurta / Shirt (Iconic black or crisp maroon shirt) -->
+  <path d="M 52 105 L 42 165 L 68 170 L 68 200 L 132 200 L 132 170 L 158 165 L 148 105 Z" fill="#18181b" stroke="#27272a" stroke-width="1"/>
+  <!-- Collar / Neck -->
+  <path d="M 85 95 L 100 120 L 115 95 Z" fill="#d49b72"/>
+  <path d="M 85 95 Q 100 102 115 95 L 110 115 L 90 115 Z" fill="#27272a"/>
+
+  <!-- Hands folded / natural pose -->
+  <ellipse cx="50" cy="170" rx="8" ry="8" fill="#d49b72"/>
+  <ellipse cx="150" cy="170" rx="8" ry="8" fill="#d49b72"/>
+
+  <!-- Neck -->
+  <rect x="90" y="80" width="20" height="20" fill="#d49b72" rx="4"/>
+
+  <!-- Head / Face -->
+  <ellipse cx="100" cy="62" rx="28" ry="32" fill="#e0a984"/>
+
+  <!-- Iconic Thick Curly Hair -->
+  <path d="M 68 62 C 65 35, 80 20, 100 20 C 120 20, 135 35, 132 62 C 126 50, 120 46, 100 46 C 80 46, 74 50, 68 62 Z" fill="#18181b"/>
+  <!-- Hair curls volume -->
+  <circle cx="75" cy="38" r="12" fill="#18181b"/>
+  <circle cx="95" cy="30" r="14" fill="#18181b"/>
+  <circle cx="115" cy="32" r="13" fill="#18181b"/>
+  <circle cx="128" cy="44" r="10" fill="#18181b"/>
+
+  <!-- Iconic Kerala Moustache (Meesha) -->
+  <path d="M 82 72 Q 100 68 100 75 Q 100 68 118 72 Q 124 76 118 79 Q 100 76 100 80 Q 100 76 82 79 Q 76 76 82 72 Z" fill="#18181b"/>
+  <!-- Twirled mustache flair -->
+  <path d="M 78 74 Q 74 70 78 67" stroke="#18181b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M 122 74 Q 126 70 122 67" stroke="#18181b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyes with classic expressive glance -->
+  <ellipse cx="88" cy="56" rx="4" ry="2.5" fill="#18181b"/>
+  <ellipse cx="112" cy="56" rx="4" ry="2.5" fill="#18181b"/>
+  <!-- Eyebrows -->
+  <path d="M 82 50 Q 88 47 94 51" stroke="#18181b" stroke-width="2" fill="none"/>
+  <path d="M 106 51 Q 112 47 118 50" stroke="#18181b" stroke-width="2" fill="none"/>
+
+  <!-- Left shoulder tilt (Iconic Lalettan shoulder tilt) -->
+  <g transform="rotate(3 100 130)">
+    <line x1="52" y1="102" x2="72" y2="98" stroke="#18181b" stroke-width="3"/>
+  </g>
+
+  <!-- Rayban sunglasses (optional accessory - subtle cool look) -->
+  <path d="M 82 54 Q 90 53 96 56 L 96 59 Q 89 63 82 60 Z" fill="#27272a" opacity="0.85"/>
+  <path d="M 104 56 Q 110 53 118 54 L 118 60 Q 111 63 104 59 Z" fill="#27272a" opacity="0.85"/>
+  <line x1="96" y1="56" x2="104" y2="56" stroke="#27272a" stroke-width="1.5"/>
+</svg>
+
