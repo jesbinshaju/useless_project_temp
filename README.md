@@ -67,12 +67,11 @@ https://youtu.be/jlhBhz-OxWQ
 Demonstrates the height of an unknown thing which we find using the height of a known object and th standard of measurement is Lalettan
 
 # Additional Demos
-https://youtu.be/jlhBhz-OxWQ
-https://github.com/jesbinshaju/useless_project_temp/tree/main
+https://a10meter-nine.vercel.app/
 
 ## Team Contributions
-- [Anandhu Babu]: [Idea,Development,Design]
-- [Jesbin Shaju]: [Development,DesignPolishing]
+[Anandhu Babu]: [Idea,Development,Design]
+[Jesbin Shaju]: [Development,DesignPolishing]
 
 
 ---
