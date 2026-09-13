@@ -6,13 +6,12 @@
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [CodeAlpha]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [Jesbin Shaju] - [Mar Athanasius College of Engineering]
+- Member 2: [Anandhu Babu] - [Mar Athanasius College of Engineering]
 
 ### Project Description
 [2-3 lines about what your project does]
