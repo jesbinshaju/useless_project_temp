@@ -60,15 +60,6 @@ For Software:
 ![A10 Meter final result](images/final.png)
 *The completed application displaying the final measurement.*
 
-# Build Photos
-![A10 Meter components](images/FrontPage.png)
-*The main application screen and its measurement controls.*
-
-![A10 Meter build](images/Screenshot%202026-09-13%20133524.png)
-*The measurement workflow during use.*
-
-![A10 Meter final build](images/final.png)
-*The final A10 Meter application.*
 
 ### Project Demo
 # Video
