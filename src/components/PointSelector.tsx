@@ -146,31 +146,17 @@ export const PointSelector: React.FC<PointSelectorProps> = ({
     drawCanvas();
   }, [drawCanvas]);
 
-  const handleCanvasClick = (
-    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-  ) => {
+  const handleCanvasPointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const rect = canvas.getBoundingClientRect();
 
-    let clientX: number;
-    let clientY: number;
-
-    if ('touches' in e) {
-      if (e.touches.length === 0) return;
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
-
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
 
-    const x = (clientX - rect.left) * scaleX;
-    const y = (clientY - rect.top) * scaleY;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
     setError(null);
 
@@ -265,8 +251,7 @@ export const PointSelector: React.FC<PointSelectorProps> = ({
             <div className="canvas-wrapper">
               <canvas
                 ref={canvasRef}
-                onClick={handleCanvasClick}
-                onTouchStart={handleCanvasClick}
+                onPointerUp={handleCanvasPointerUp}
                 className="measurement-canvas"
               />
             </div>
